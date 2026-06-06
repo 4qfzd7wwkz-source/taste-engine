@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Taste Engine — Before vs After</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;
+  background:#0C0C14;color:#E8E4DE;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  text-align:center;padding:80px 24px 60px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+header h1{
+  font-size:clamp(28px,4vw,44px);font-weight:800;
+  letter-spacing:-.03em;margin-bottom:12px;
+}
+header h1 span{color:#C9A96E}
+header p{color:#8E8EA0;font-size:16px;max-width:520px;margin:0 auto}
+.comparison-section{padding:60px 24px;max-width:1200px;margin:0 auto}
+.comparison-section h2{
+  font-size:20px;font-weight:600;margin-bottom:24px;
+  position:relative;padding-left:16px;
+}
+.comparison-section h2::before{
+  content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;border-radius:2px;
+}
+.before h2::before{background:#ef4444}
+.after h2::before{background:#22c55e}
+.before-after-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px;
+}
+.mockup{
+  border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;
+  background:#14141F;
+}
+.mockup-header{
+  padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.06);
+  font-size:11px;color:#5A5A72;display:flex;align-items:center;gap:8px;
+}
+.mockup-dots{display:flex;gap:6px}
+.mockup-dot{width:8px;height:8px;border-radius:50%}
+.mockup-dot:nth-child(1){background:#ef4444}
+.mockup-dot:nth-child(2){background:#f59e0b}
+.mockup-dot:nth-child(3){background:#22c55e}
+.mockup-body{padding:24px}
+/* ─── BEFORE (AI Default) ─── */
+.before-hero{text-align:center;padding:32px 16px;background:linear-gradient(135deg,#1a0533,#0d0d1a);border-radius:8px;margin-bottom:24px}
+.before-hero h1{font-family:'Inter',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px}
+.before-hero p{font-family:'Inter';font-size:12px;color:#8b8ba0;margin-bottom:16px}
+.before-btn{padding:10px 28px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border:none;border-radius:8px;font-size:13px;font-family:'Inter';font-weight:500;cursor:pointer}
+.before-cards{display:flex;gap:12px}
+.before-card{flex:1;padding:20px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;text-align:center}
+.before-card .icon{font-size:24px;margin-bottom:8px}
+.before-card h3{font-family:'Inter';font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}
+.before-card p{font-family:'Inter';font-size:11px;color:#8b8ba0}
+/* ─── AFTER (With Taste Skill) ─── */
+.after-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:32px;
+}
+.after-nav-logo{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.after-nav-links{display:flex;gap:20px;align-items:center}
+.after-nav-links a{color:#8E8EA0;text-decoration:none;font-size:12px;font-weight:500}
+.after-nav-cta{padding:6px 18px;background:#C9A96E;color:#0C0C14;border-radius:100px;font-size:12px;font-weight:600;text-decoration:none}
+.after-hero{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  margin-bottom:32px;
+}
+.after-hero-text h1{
+  font-size:32px;font-weight:800;line-height:1.1;letter-spacing:-.03em;color:#fff;margin-bottom:12px;
+}
+.after-hero-text h1 .gold{color:#C9A96E}
+.after-hero-text p{font-size:13px;color:#8E8EA0;line-height:1.6;margin-bottom:20px;max-width:360px}
+.after-hero-cta{display:flex;gap:12px}
+.after-btn-primary{padding:12px 28px;background:#C9A96E;color:#0C0C14;border:none;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer}
+.after-btn-secondary{padding:12px 28px;border:1px solid rgba(255,255,255,0.15);color:#E8E4DE;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;background:transparent}
+.after-hero-image{
+  background:linear-gradient(135deg,rgba(201,169,110,0.1),rgba(201,169,110,0.02));
+  border-radius:12px;height:200px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(201,169,110,0.1);
+  font-size:12px;color:#5A5A72;
+}
+.after-grid{
+  display:grid;grid-template-columns:1.5fr 1fr;gap:12px;
+}
+.after-grid .main-card{
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;padding:24px;min-height:160px;
+}
+.after-grid .side-stack{display:flex;flex-direction:column;gap:12px}
+.after-grid .stack-card{
+  flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;padding:20px;
+}
+.stack-card h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+.stack-card p{font-size:11px;color:#8E8EA0}
+.main-card h4{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px}
+.main-card p{font-size:12px;color:#8E8EA0;line-height:1.6}
+.tag-row{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.tag{padding:3px 10px;border-radius:100px;font-size:10px;border:1px solid rgba(255,255,255,0.08);color:#8E8EA0}
+.tag.active{background:rgba(201,169,110,0.12);border-color:rgba(201,169,110,0.2);color:#C9A96E}
+.diff-list{
+  max-width:1200px;margin:0 auto;padding:40px 24px 80px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;
+}
+.diff-item{
+  padding:20px 24px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);border-radius:8px;
+}
+.diff-item h4{font-size:13px;font-weight:600;margin-bottom:6px}
+.diff-item p{font-size:12px;color:#8E8EA0;line-height:1.5}
+.diff-item .badge{
+  display:inline-block;padding:2px 8px;border-radius:100px;
+  font-size:10px;font-weight:600;margin-bottom:8px;
+}
+.badge.before-badge{background:rgba(239,68,68,0.12);color:#ef4444}
+.badge.after-badge{background:rgba(34,197,94,0.12);color:#22c55e}
+.cta-section{
+  text-align:center;padding:60px 24px;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.cta-section h2{font-size:24px;font-weight:700;margin-bottom:12px}
+.cta-section p{color:#8E8EA0;font-size:14px;margin-bottom:24px}
+.cta-btn{
+  padding:14px 36px;background:#C9A96E;color:#0C0C14;
+  border:none;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;
+  display:inline-block;
+}
+.code-block{
+  background:#0a0a12;border:1px solid rgba(255,255,255,0.06);border-radius:8px;
+  padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#8E8EA0;
+  display:inline-block;text-align:left;margin-top:20px;
+}
+.code-block .prompt{color:#C9A96E}
+@media(max-width:768px){
+  .before-after-grid{grid-template-columns:1fr}
+  .after-hero{grid-template-columns:1fr;gap:24px}
+  .after-grid{grid-template-columns:1fr}
+  .diff-list{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 设计品味引擎<br><span>Before vs After</span></h1>
+  <p>同样的需求，AI 没装 skill 之前和装之后的输出对比。差距不只是在视觉上——而是在品味上。</p>
+</header>
+
+<section class="comparison-section">
+  <div class="before-after-grid">
+    <div class="mockup before">
+      <div class="mockup-header">
+        <div class="mockup-dots">
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+        </div>
+        ❌ 没装 Design Taste Engine
+      </div>
+      <div class="mockup-body">
+        <div class="before-hero">
+          <h1>🚀 下一代 AI 平台</h1>
+          <p>用人工智能驱动你的业务增长</p>
+          <button class="before-btn">开始免费试用 →</button>
+        </div>
+        <div class="before-cards">
+          <div class="before-card">
+            <div class="icon">⚡</div>
+            <h3>智能分析</h3>
+            <p>AI 驱动的深度分析</p>
+          </div>
+          <div class="before-card">
+            <div class="icon">🔒</div>
+            <h3>安全可靠</h3>
+            <p>企业级安全保障</p>
+          </div>
+          <div class="before-card">
+            <div class="icon">📊</div>
+            <h3>数据洞察</h3>
+            <p>实时数据可视化</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup after">
+      <div class="mockup-header">
+        <div class="mockup-dots">
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+        </div>
+        ✅ 已安装 Design Taste Engine
+      </div>
+      <div class="mockup-body">
+        <div class="after-nav">
+          <div class="after-nav-logo">forma</div>
+          <div class="after-nav-links">
+            <a href="#">产品</a>
+            <a href="#">价格</a>
+            <a href="#">文档</a>
+            <a href="#" class="after-nav-cta">开始使用</a>
+          </div>
+        </div>
+        <div class="after-hero">
+          <div class="after-hero-text">
+            <h1>设计 <span class="gold">不妥协</span><br>开发不等待</h1>
+            <p>从设计到上线的协作平台。让你的产品团队在同一个画布上思考、迭代、交付。</p>
+            <div class="after-hero-cta">
+              <button class="after-btn-primary">免费试用 →</button>
+              <button class="after-btn-secondary">观看演示</button>
+            </div>
+          </div>
+          <div class="after-hero-image">产品界面预览</div>
+        </div>
+        <div class="after-grid">
+          <div class="main-card">
+            <h4>实时协作画布</h4>
+            <p>设计师、产品经理和工程师在同一个空间工作。从低保真线框图到高保真原型，每一步都透明可见。</p>
+            <div class="tag-row">
+              <span class="tag active">设计系统</span>
+              <span class="tag">实时同步</span>
+              <span class="tag">版本历史</span>
+            </div>
+          </div>
+          <div class="side-stack">
+            <div class="stack-card">
+              <h4>设计 → 代码</h4>
+              <p>一键导出符合你设计系统的组件代码</p>
+            </div>
+            <div class="stack-card">
+              <h4>反馈循环</h4>
+              <p>在画布上直接标注、评论、审批</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="max-width:1200px;margin:0 auto;padding:0 24px;">
+  <h2 style="font-size:20px;font-weight:600;margin-bottom:24px;">📋 具体改善点</h2>
+  <div class="diff-list" style="padding:0;max-width:none;">
+    <div class="diff-item">
+      <span class="badge before-badge">❌ AI 默认</span>
+      <span class="badge after-badge">✅ 使用本 skill</span>
+      <h4>英雄区布局</h4>
+      <p>居中 + 紫色渐变 + 通用 icon 三卡 → 非对称分割 + 金色点缀 + 差异化网格</p>
+    </div>
+    <div class="diff-item">
+      <span class="badge before-badge">❌ AI 默认</span>
+      <span class="badge after-badge">✅ 使用本 skill</span>
+      <h4>字体选择</h4>
+      <p>Inter（默认感）→ 未指定但符合品味的排印系统</p>
+    </div>
+    <div class="diff-item">
+      <span class="badge before-badge">❌ AI 默认</span>
+      <span class="badge after-badge">✅ 使用本 skill</span>
+      <h4>按钮样式</h4>
+      <p>圆角矩形 + 紫色渐变 → 全圆角 + 金色实色（有意图的配色）</p>
+    </div>
+    <div class="diff-item">
+      <span class="badge before-badge">❌ AI 默认</span>
+      <span class="badge after-badge">✅ 使用本 skill</span>
+      <h4>卡片布局</h4>
+      <p>三张等宽等高功能卡 → Bento 风格：主卡 + 侧边叠卡（有节奏）</p>
+    </div>
+    <div class="diff-item">
+      <span class="badge before-badge">❌ AI 默认</span>
+      <span class="badge after-badge">✅ 使用本 skill</span>
+      <h4>Typography</h4>
+      <p>14px + 通用文案（"AI驱动的、智能化"类）→ 具体、有态度的文案</p>
+    </div>
+    <div class="diff-item">
+      <span class="badge before-badge">❌ AI 默认</span>
+      <span class="badge after-badge">✅ 使用本 skill</span>
+      <h4>导航栏</h4>
+      <p>纯文字连接 → 浮动导航 + 金色 CTA 按钮</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>想让你的 AI 也输出右边那样的设计？</h2>
+  <p>安装 Design Taste Engine，你的 AI Agent 立刻拥有专业前端设计师的品味。</p>
+  <div>
+    <a href="#" class="cta-btn">获取 Design Taste Engine</a>
+    <div class="code-block">
+      <span class="prompt">$</span> # 复制到 ~/.claude/skills/design-taste-engine/<br>
+      <span class="prompt">$</span> # 或: ccpi install design-taste-engine
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
